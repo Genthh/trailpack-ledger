@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("./barlowcondensed.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  --identity-font: "Barlow Condensed", sans-serif;
+}

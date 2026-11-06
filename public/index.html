@@ -3,12 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#173d33" />
+    <meta name="theme-color" content="#f4bf4d" />
     <meta
       name="description"
       content="Plan a day hike, check off gear and keep an eye on your pack weight."
     />
     <title>Trailpack Ledger</title>
+    <link rel="stylesheet" href="fonts/type.css" />
     <link rel="stylesheet" href="style.css" />
     <script defer src="model.js"></script>
     <script defer src="app.js"></script>
@@ -16,12 +17,66 @@
   <body>
     <main>
       <header class="hero">
-        <div class="contours" aria-hidden="true"></div>
-        <div class="hero-inner">
-          <div class="intro">
-            <h1>Trailpack<br /><i>Ledger</i></h1>
-            <p>Build your gear list and weigh your pack before you head out.</p>
-          </div>
+        <div class="intro">
+          <h1>Trailpack <span>Ledger</span></h1>
+          <p>Build your gear list and weigh your pack before you head out.</p>
+        </div>
+        <svg
+          class="ridgeline"
+          viewBox="0 0 640 280"
+          preserveAspectRatio="xMidYMax slice"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path fill="#c6dde0" d="M0 0h640v280H0z" />
+          <circle cx="474" cy="65" r="38" fill="#f4bf4d" />
+          <path
+            fill="#a9c6cb"
+            d="m0 141 93-40 41 18 88-61 63 49 46-24 61 37 59-38 73 35 67-50 49 28v185H0Z"
+          />
+          <path
+            fill="#698e99"
+            d="m0 163 73-41 29 10L228 36l60 50 51 48 41-18 118 70 93-71 49 27v138H0Z"
+          />
+          <path
+            fill="#f0f3e6"
+            d="m161 88 67-52 61 51-31-13 8 14-27-17-14 5 2-16-29 24 4-14Z"
+          />
+          <path
+            fill="#355d68"
+            d="m0 181 86-35 64 10 110-65 36 24 24-7 100 69 64-19 62-29 94 25v126H0Z"
+          />
+          <path
+            fill="#233f49"
+            d="m0 221 94-32 69 12 112-38 108 17 95-26 46 7 116-25v144H0Z"
+          />
+          <path
+            fill="#172e34"
+            d="m0 250 120-21 80 16 148-17 117-27 70-8 105-34v121H0Z"
+          />
+          <g fill="#172e34">
+            <defs>
+              <path
+                id="fir"
+                d="m0 0-5 10h2l-5 9h3l-5 8h8v8h4v-8h8l-5-8h3l-5-9h2Z"
+              />
+            </defs>
+            <use href="#fir" x="448" y="181" />
+            <use href="#fir" x="464" y="175" />
+            <use href="#fir" x="605" y="143" />
+            <use href="#fir" x="621" y="135" />
+          </g>
+          <path
+            fill="none"
+            stroke="#f4bf4d"
+            stroke-width="2"
+            stroke-dasharray="5 5"
+            d="M188 280q97-29 171-33t34-16q-24-10 36-17t45-11"
+          />
+        </svg>
+      </header>
+      <div class="workspace">
+        <aside class="pack-desk" aria-label="Plan your load">
           <section class="load" aria-labelledby="load-title">
             <h2 id="load-title">Planned load</h2>
             <strong id="mass-total">1.4 kg</strong>
@@ -49,52 +104,50 @@
             </div>
             <p id="margin"></p>
           </section>
-        </div>
-      </header>
-      <div class="workspace">
-        <section class="editor" aria-labelledby="entry-title">
-          <h2 id="entry-title">Add gear</h2>
-          <form id="entry">
-            <label for="item-name">Item name</label
-            ><input
-              id="item-name"
-              required
-              maxlength="60"
-              placeholder="e.g. Headlamp"
-            />
-            <label for="item-category">Category</label
-            ><select id="item-category"></select>
-            <div class="numbers">
-              <div>
-                <label for="item-weight">Weight each (g)</label
-                ><input
-                  id="item-weight"
-                  type="number"
-                  min="1"
-                  max="100000"
-                  step="1"
-                  required
-                  placeholder="85"
-                />
+          <section class="editor" aria-labelledby="entry-title">
+            <h2 id="entry-title">Add gear</h2>
+            <form id="entry">
+              <label for="item-name">Item name</label
+              ><input
+                id="item-name"
+                required
+                maxlength="60"
+                placeholder="e.g. Headlamp"
+              />
+              <label for="item-category">Category</label
+              ><select id="item-category"></select>
+              <div class="numbers">
+                <div>
+                  <label for="item-weight">Weight each (g)</label
+                  ><input
+                    id="item-weight"
+                    type="number"
+                    min="1"
+                    max="100000"
+                    step="1"
+                    required
+                    placeholder="85"
+                  />
+                </div>
+                <div>
+                  <label for="item-qty">Quantity</label
+                  ><input
+                    id="item-qty"
+                    type="number"
+                    min="1"
+                    max="99"
+                    step="1"
+                    required
+                    value="1"
+                  />
+                </div>
               </div>
-              <div>
-                <label for="item-qty">Quantity</label
-                ><input
-                  id="item-qty"
-                  type="number"
-                  min="1"
-                  max="99"
-                  step="1"
-                  required
-                  value="1"
-                />
-              </div>
-            </div>
-            <button id="add-item">
-              Add to pack <span aria-hidden="true">+</span>
-            </button>
-          </form>
-        </section>
+              <button id="add-item">
+                Add to pack <span aria-hidden="true">+</span>
+              </button>
+            </form>
+          </section>
+        </aside>
         <section class="manifest" aria-labelledby="gear-title">
           <div class="manifest-head">
             <h2 id="gear-title">Gear list</h2>

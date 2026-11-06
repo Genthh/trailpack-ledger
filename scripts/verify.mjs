@@ -11,6 +11,12 @@ const inventory = execFileSync(
 );
 const files = new Map();
 for (const file of inventory.split("\0").filter(Boolean)) {
+  if (file.endsWith(".woff2")) {
+    const font = readFileSync(file);
+    assert.equal(font.toString("ascii", 0, 4), "wOF2", "Invalid font: " + file);
+    assert.equal(font.readUInt32BE(8), font.length, "Incomplete font: " + file);
+    continue;
+  }
   const source = readFileSync(file, "utf8");
   files.set(file, source);
   const lines = source.split("\n").length - Number(source.endsWith("\n"));
