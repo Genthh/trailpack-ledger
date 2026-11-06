@@ -26,21 +26,93 @@ const Trailpack = (() => {
     return Number.isFinite(value) && value >= 0.1 && value <= 100;
   }
 
+  function validPack(data) {
+    return (
+      data &&
+      Array.isArray(data.items) &&
+      data.items.every(validItem) &&
+      new Set(data.items.map((item) => item.id)).size === data.items.length &&
+      validBudget(data.budget)
+    );
+  }
+
   function deserialize(raw) {
     try {
       const data = JSON.parse(raw);
-      if (
-        Array.isArray(data.items) &&
-        data.items.every(validItem) &&
-        new Set(data.items.map((item) => item.id)).size === data.items.length &&
-        validBudget(data.budget)
-      ) {
-        return data;
-      }
+      return validPack(data) ? data : null;
     } catch {
       return null;
     }
-    return null;
+  }
+
+  function validName(value) {
+    return (
+      typeof value === "string" && value.trim().length > 0 && value.length <= 60
+    );
+  }
+
+  function readLibrary(raw) {
+    try {
+      const data = JSON.parse(raw);
+      if (
+        data.version !== 2 ||
+        !Array.isArray(data.hikes) ||
+        !data.hikes.length
+      )
+        return null;
+      if (
+        !data.hikes.every(
+          (hike) =>
+            validPack(hike) && validName(hike.id) && validName(hike.name),
+        )
+      )
+        return null;
+      const ids = new Set(data.hikes.map((hike) => hike.id));
+      return ids.size === data.hikes.length && ids.has(data.active)
+        ? data
+        : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function newLibrary(legacy) {
+    const pack = deserialize(legacy) || initial();
+    return {
+      version: 2,
+      active: "day-hike",
+      hikes: [
+        {
+          id: "day-hike",
+          name: "Day hike",
+          budget: pack.budget,
+          items: pack.items,
+        },
+      ],
+    };
+  }
+
+  function createHike(id, name, source) {
+    return {
+      id,
+      name: name.trim(),
+      budget: source ? source.budget : 5,
+      items: source
+        ? source.items.map((item) => ({ ...item, packed: false }))
+        : [],
+    };
+  }
+
+  function categoryWeights(items) {
+    return categories
+      .map((category) => ({
+        category,
+        grams: items
+          .filter((item) => item.category === category)
+          .reduce((sum, item) => sum + item.qty * item.grams, 0),
+      }))
+      .filter((entry) => entry.grams > 0)
+      .sort((a, b) => b.grams - a.grams);
   }
 
   function initial() {
@@ -86,7 +158,18 @@ const Trailpack = (() => {
     );
   }
 
-  return { categories, validItem, validBudget, deserialize, initial, totals };
+  return {
+    categories,
+    validItem,
+    validBudget,
+    deserialize,
+    initial,
+    totals,
+    readLibrary,
+    newLibrary,
+    createHike,
+    categoryWeights,
+  };
 })();
 
 if (typeof module !== "undefined") module.exports = Trailpack;
