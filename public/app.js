@@ -18,6 +18,14 @@ const weight = (grams) =>
     grams / 1000,
   ) + " kg";
 
+const fieldSheet = globalThis.createFieldSheet({
+  get,
+  weight,
+  model: Trailpack,
+  getHike: () => state,
+  getHikes: () => library.hikes,
+});
+
 function save() {
   try {
     localStorage.setItem(key, JSON.stringify(library));
@@ -58,6 +66,7 @@ function summary() {
     ),
   );
   get("load-breakdown").hidden = state.items.length === 0;
+  fieldSheet.refresh();
 }
 
 let editingId = null;

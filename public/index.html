@@ -11,7 +11,9 @@
     <title>Trailpack Ledger</title>
     <link rel="stylesheet" href="fonts/type.css" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="field-sheet.css" />
     <script defer src="model.js"></script>
+    <script defer src="field-sheet.js"></script>
     <script defer src="app.js"></script>
   </head>
   <body>
@@ -188,10 +190,60 @@
           <p id="empty" hidden>
             Your pack is empty. Add an item to start your list.
           </p>
+          <details id="compare-hikes">
+            <summary>Compare hikes</summary>
+            <p id="compare-empty">
+              Create or duplicate another hike to compare its load with this
+              one.
+            </p>
+            <div id="compare-panel" hidden>
+              <label for="compare-with">Compare this pack with</label>
+              <select id="compare-with"></select>
+              <p id="compare-summary" role="status"></p>
+              <table id="compare-table">
+                <caption class="visually-hidden">
+                  Planned weight by category, in kilograms
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">This pack</th>
+                    <th scope="col">Other pack</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </details>
+          <button type="button" id="print-pack">Print packing checklist</button>
           <p class="save-note" id="save-note">Saved in this browser.</p>
           <p class="visually-hidden" id="status" role="status"></p>
         </section>
       </div>
+      <section
+        class="field-sheet"
+        id="field-sheet"
+        aria-labelledby="print-name"
+      >
+        <p>Trailpack Ledger · Packing checklist</p>
+        <h2 id="print-name"></h2>
+        <p id="print-stats"></p>
+        <table>
+          <caption class="visually-hidden">
+            Gear to pack for the selected hike
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Packed</th>
+              <th scope="col">Item</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Total weight</th>
+            </tr>
+          </thead>
+          <tbody id="print-gear"></tbody>
+        </table>
+        <p id="print-empty" hidden>This hike has no gear yet.</p>
+      </section>
     </main>
   </body>
 </html>
