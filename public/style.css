@@ -244,6 +244,18 @@ ul {
 .item-meta {
   margin-top: 5px;
 }
+.gear-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#cancel-edit {
+  padding: 8px;
+  border: 1px solid #708486;
+  border-radius: 3px;
+  color: var(--ink);
+  background: var(--paper);
+}
 .remove {
   background: transparent;
   border: 0;
@@ -308,5 +320,111 @@ ul {
   .load,
   .editor {
     padding: 16px;
+  }
+}
+.trip-switcher {
+  margin-top: 20px;
+  padding: 14px 18px;
+  border-block: 1px solid #798e8e;
+  background: #f7f7ec;
+}
+.trip-controls,
+.trip-actions,
+.trip-picker,
+#hike-form:not([hidden]),
+#delete-form:not([hidden]) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.trip-controls {
+  justify-content: space-between;
+  gap: 12px;
+}
+.trip-picker {
+  min-width: 0;
+  max-width: 100%;
+  gap: 12px;
+}
+.trip-picker label,
+#load-breakdown h3 {
+  font: 700 1.25rem var(--identity-font);
+  margin: 0;
+}
+#hike-picker {
+  width: clamp(125px, 18vw, 240px);
+  max-width: 100%;
+}
+.trip-switcher button {
+  border: 1px solid #708486;
+  border-radius: 4px;
+  padding: 8px 12px;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 40px;
+}
+.trip-switcher button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+#hike-new,
+#hike-submit {
+  background: var(--ink);
+  color: var(--paper);
+}
+#hike-form:not([hidden]),
+#delete-form:not([hidden]) {
+  border-top: 1px dashed #8c9a91;
+  margin-top: 12px;
+  padding-top: 12px;
+}
+#hike-name {
+  max-width: 100%;
+}
+#load-breakdown {
+  border-top: 1px solid #829395;
+  margin-top: 16px;
+  padding-top: 14px;
+}
+#category-load li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5px;
+  padding-top: 10px;
+  font-size: 0.82rem;
+}
+.weight-bar {
+  grid-column: 1/-1;
+  height: 5px;
+  background: linear-gradient(
+    to right,
+    #355d68 var(--share),
+    #bccfd1 var(--share)
+  );
+}
+@media (max-width: 480px) {
+  .gear-actions {
+    display: grid;
+    gap: 0;
+  }
+  .gear-actions button {
+    padding-block: 5px;
+  }
+  .trip-switcher {
+    padding: 12px;
+  }
+  .trip-actions {
+    gap: 5px;
+  }
+  .trip-actions button {
+    font-size: 0.85rem;
+    padding-inline: 8px;
+  }
+  .trip-picker {
+    flex: 1;
+  }
+  .trip-picker select {
+    flex: 1;
   }
 }

@@ -75,6 +75,31 @@
           />
         </svg>
       </header>
+      <section class="trip-switcher" aria-labelledby="trips-title">
+        <div class="trip-controls">
+          <div class="trip-picker">
+            <label for="hike-picker" id="trips-title">Your hikes</label>
+            <select id="hike-picker"></select>
+          </div>
+          <div class="trip-actions">
+            <button id="hike-new" type="button">New hike</button>
+            <button id="hike-copy" type="button">Duplicate</button>
+            <button id="hike-rename" type="button">Rename</button>
+            <button id="hike-delete" type="button">Delete</button>
+          </div>
+        </div>
+        <form id="hike-form" hidden>
+          <label for="hike-name">Hike name</label>
+          <input id="hike-name" required maxlength="60" autocomplete="off" />
+          <button id="hike-submit" type="submit">Create hike</button>
+          <button id="hike-cancel" type="button">Cancel</button>
+        </form>
+        <div id="delete-form" hidden>
+          <p id="delete-message"></p>
+          <button id="delete-cancel" type="button">Keep hike</button>
+          <button id="hike-confirm-delete" type="button">Delete hike</button>
+        </div>
+      </section>
       <div class="workspace">
         <aside class="pack-desk" aria-label="Plan your load">
           <section class="load" aria-labelledby="load-title">
@@ -103,6 +128,10 @@
               >
             </div>
             <p id="margin"></p>
+            <section id="load-breakdown" aria-labelledby="weights-label">
+              <h3 id="weights-label">Weight by category</h3>
+              <ul id="category-load"></ul>
+            </section>
           </section>
           <section class="editor" aria-labelledby="entry-title">
             <h2 id="entry-title">Add gear</h2>
@@ -143,8 +172,10 @@
                 </div>
               </div>
               <button id="add-item">
-                Add to pack <span aria-hidden="true">+</span>
+                <span id="entry-label">Add to pack</span>
+                <span id="entry-symbol" aria-hidden="true">+</span>
               </button>
+              <button type="button" id="cancel-edit" hidden>Cancel edit</button>
             </form>
           </section>
         </aside>
