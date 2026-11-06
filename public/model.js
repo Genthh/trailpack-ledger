@@ -115,6 +115,32 @@ const Trailpack = (() => {
       .sort((a, b) => b.grams - a.grams);
   }
 
+  function compareLoads(active, other) {
+    const categoryMap = (items) =>
+      new Map(
+        categoryWeights(items).map(({ category, grams }) => [category, grams]),
+      );
+    const first = categoryMap(active.items);
+    const second = categoryMap(other.items);
+    const rows = categories
+      .filter((name) => first.has(name) || second.has(name))
+      .map((category) => {
+        const activeGrams = first.get(category) || 0;
+        const otherGrams = second.get(category) || 0;
+        return {
+          category,
+          activeGrams,
+          otherGrams,
+          delta: activeGrams - otherGrams,
+        };
+      })
+      .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
+    return {
+      rows,
+      delta: totals(active.items).grams - totals(other.items).grams,
+    };
+  }
+
   function initial() {
     return {
       budget: 5,
@@ -169,6 +195,7 @@ const Trailpack = (() => {
     newLibrary,
     createHike,
     categoryWeights,
+    compareLoads,
   };
 })();
 

@@ -78,3 +78,29 @@ test("category load sums quantities and lists the heaviest categories first", ()
     ],
   );
 });
+
+test("compare loads sums quantities, includes one-sided categories and ranks the largest differences first", () => {
+  const hike = pack.initial();
+  const other = {
+    items: [
+      { ...hike.items[0], grams: 450, qty: 2, packed: true },
+      { ...hike.items[0], category: "Essentials", grams: 40 },
+    ],
+  };
+  const result = pack.compareLoads(hike, other);
+  assert.equal(result.delta, 460);
+  assert.deepEqual(
+    result.rows.map((row) => [row.category, row.delta]),
+    [
+      ["Water", 920],
+      ["Clothing", -625],
+      ["Food", 205],
+      ["Essentials", -40],
+    ],
+  );
+  assert.deepEqual(pack.compareLoads({ items: [] }, { items: [] }), {
+    rows: [],
+    delta: 0,
+  });
+  assert.equal(pack.compareLoads(hike, hike).delta, 0);
+});
